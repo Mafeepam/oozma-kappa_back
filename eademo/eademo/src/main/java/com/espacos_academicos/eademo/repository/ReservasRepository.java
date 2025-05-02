@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ReservasRepository extends JpaRepository<Reservas, Long> {
+    // Adicione este método para buscar reservas por data e espaço
     List<Reservas> findByDataAndEspaco(LocalDate data, String espaco);
 }
+
