@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS scea.usuario (
 );
 
 
+
 CREATE TABLE IF NOT EXISTS scea.professores (
+ 	id SERIAL PRIMARY KEY,
     nome VARCHAR(100),
     email VARCHAR(100) UNIQUE,
     curso VARCHAR(100)
@@ -31,6 +33,7 @@ CREATE TABLE IF NOT EXISTS scea.espacosfisicos (
     tipo VARCHAR(100) CHECK (tipo IN ('sala', 'auditorio', 'laboratorio')) NOT NULL,
     capacidade INT NOT NULL
 );
+
 
 
 INSERT INTO scea.usuario (email, senha, funcao) VALUES
