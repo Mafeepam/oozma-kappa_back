@@ -1,7 +1,7 @@
 package com.espacos_academicos.eademo.controller;
 
 import com.espacos_academicos.eademo.entity.Professores;
-import com.espacos_academicos.eademo.repository.ProfessoresRepository;
+import com.espacos_academicos.eademo.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,27 +12,16 @@ import org.springframework.web.bind.annotation.*;
 public class ProfessoresController {
 
     @Autowired
-    private ProfessoresRepository professoresRepository;
+    private ProfessorService professorService;
 
     @PutMapping("/{id}")
     public ResponseEntity<Professores> atualizarProfessor(@PathVariable Long id, @RequestBody Professores professorAtualizado) {
-        return professoresRepository.findById(id)
-                .map(professor -> {
-                    professor.setNome(professorAtualizado.getNome());
-                    professor.setEmail(professorAtualizado.getEmail());
-                    professor.setCurso(professorAtualizado.getCurso());
-                    return ResponseEntity.ok(professoresRepository.save(professor));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        Professores atualizado = professorService.atualizarProfessor(id, professorAtualizado);
+        return atualizado != null ? ResponseEntity.ok(atualizado) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirProfessor(@PathVariable Long id) {
-        if (professoresRepository.existsById(id)) {
-            professoresRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+        return professorService.excluirProfessor(id) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }
-
