@@ -34,7 +34,6 @@ public class Reservas {
     // Construtor padrão (geralmente gerado implicitamente se não existir outro)
     public Reservas() { }
 
-    // Getters e Setters
 
     public Long getId() {
         return id;
